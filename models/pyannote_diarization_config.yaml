@@ -6,11 +6,11 @@ pipeline:
     clustering: AgglomerativeClustering
     # embedding: pyannote/wespeaker-voxceleb-resnet34-LM  # if you want to use the HF models
     embedding: models/pyannote_model_wespeaker-voxceleb-resnet34-LM.bin  # if you want to use the local models
-    embedding_batch_size: 64
+    embedding_batch_size: 128
     embedding_exclude_overlap: true
     # segmentation: pyannote/segmentation-3.0  # if you want to use the HF models
     segmentation: models/pyannote_model_segmentation-3.0.bin  # if you want to use the local models
-    segmentation_batch_size: 64
+    segmentation_batch_size: 128
 
 params:
   clustering:
