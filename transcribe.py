@@ -1,7 +1,6 @@
 import threading
-from io import BytesIO
+from datetime import time
 import os
-from typing import List, Dict
 
 import torch
 from pyannote.audio import Pipeline
@@ -56,12 +55,11 @@ class Transcribe:
     #                                           translate=False, language="auto", print_realtime=True, split_on_word=True)
     #     return output
 
+    import time
+
     def process_task(self, file_path: str) -> list[dict[str, float | str]]:
-        """
-        Process a single diarization task.
-        """
+        start_time = time.time()
         with self._lock:
-            # Run diarization
             diarization = self._pipeline(file_path)
             data = []
             for turn, _, speaker in diarization.itertracks(yield_label=True):
@@ -71,6 +69,9 @@ class Transcribe:
                     "endTime": format_time(turn.end),
                     "speaker": new_speaker
                 })
+        end_time = time.time()
+        duration = end_time - start_time
+        print(f"处理 {file_path} 用时：{duration:.2f} 秒")
         return data
 
 
